@@ -1,0 +1,36 @@
+.HeaderBlock {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+    height         : 80px;
+}
+
+.HeaderTitle {
+    margin     : 0;
+    font-size  : 35px;
+    font-weight: 700;
+    color      : #fff;
+}
+
+.HeaderLinks {
+    display        : flex;
+    align-items    : center;
+    list-style-type: none;
+    color          : #fff;
+}
+
+li {
+    margin-right: 30px;
+    font-size   : 22px;
+    font-weight : 600;
+}
+
+a {
+    color          : #fff;
+    list-style     : none;
+    text-decoration: none;
+}
+
+a:hover {
+    color    : rgb(222, 247, 255);
+}

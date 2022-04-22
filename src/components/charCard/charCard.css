@@ -1,0 +1,25 @@
+.card {
+    display       : flex;
+    flex-direction: row;
+    width         : 40%;
+}
+
+.charCard {
+    width: 35%;
+}
+
+.card-text {
+    margin     : 0;
+    font-weight: 500;
+    font-size  : 18px;
+    margin-top : 4px;
+}
+
+.card-title {
+    font-size: 20px;
+}
+
+.text-gray {
+    color    : rgb(144, 144, 144);
+    font-size: 15px;
+}
