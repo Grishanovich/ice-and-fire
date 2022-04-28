@@ -3,8 +3,9 @@ import { Container } from 'reactstrap';
 import RamService from '../../services/ramService'
 import Header from '../header/header';
 import RandomChar from '../randomChar/randomChar';
-import AllChar from './allChar/allChar';
+import AllChar from '../allChar/allChar';
 
+import './App.css'
 
 export default class App extends Component {
 
@@ -14,7 +15,7 @@ export default class App extends Component {
         <Container>
           <Header />
         </Container>
-        
+
         <Container>
           <RandomChar />
         </Container>

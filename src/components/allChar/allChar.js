@@ -1,8 +1,10 @@
 import { render } from "@testing-library/react";
 import React, { Component } from "react";
 import { Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle } from "reactstrap";
-import RamService from "../../../services/ramService";
-import { CharCard } from "../../charCard/charCard";
+import RamService from "../../services/ramService";
+import { CharCard } from "../charCard/charCard";
+
+import './allChar.css'
 
 export default class AllChar extends Component {
 
@@ -10,22 +12,62 @@ export default class AllChar extends Component {
 
     state = {
         charList: [],
-        pageInfo: []
+        pageInfo: [],
+        page: 1
     }
 
-    componentDidMount() {
-        this.getPages()
-    }
-
-    getPages() {
-        this.ramService.getPageInfo()
-            .then((pages) => {
-                const page = (pages.next.slice(47));
-                this.ramService.getAllCharacters(page)
-                    .then((charList) => {
-                        this.setState({ charList })
-                    })
+    componentDidMount = async () => {
+        await this.getPages()
+        this.ramService.getAllCharacters(this.state.page)
+            .then((charList) => {
+                this.setState({ charList })
             })
+    }
+
+
+    getPages = async () => {
+        await this.ramService.getPageInfo()
+            .then((pages) => {
+                this.setState({
+                    pageInfo: pages
+                })
+            })
+    }
+
+    nextPage = async () => {
+
+        if (this.state.page > 42) {
+            this.setState({ page: 42 })
+        } else {
+            await this.setState({
+                page: this.state.page + 1
+            })
+        }
+
+        this.ramService.getAllCharacters(this.state.page)
+            .then((charList) => {
+                this.setState({ charList })
+            })
+    }
+
+    prevPage = async () => {
+
+        if (this.state.page <= 1) {
+            this.setState({ page: 1 })
+        } else {
+            await this.setState({
+                page: this.state.page - 1
+            })
+        }
+
+        this.ramService.getAllCharacters(this.state.page)
+            .then((charList) => {
+                this.setState({ charList })
+            })
+    }
+
+    changePage(e) {
+        console.log(e.target);
     }
 
     renderItem(arr) {
@@ -65,20 +107,11 @@ export default class AllChar extends Component {
                         </CardText>
                     </CardBody>
                 </Card>
-                // <CharCard
-                //     key={i}
-                //     name={item.name}
-                //     image={item.image}
-                //     gender={item.gender}
-                //     status={item.status}
-                //     location={item.location}
-                //     species={item.species}
-                //     type={item.type}
-
-                // />
             )
         })
     }
+
+   
 
     render() {
 
@@ -86,10 +119,27 @@ export default class AllChar extends Component {
 
         const items = this.renderItem(charList)
 
+
+        const style = {
+            height: '3px',
+            color: 'black'
+        }
+
         return (
             <>
-                {items}
+                <div className="cards">
+                    {items}
+                </div>
+                <hr style={style} />
+
+                <div className="btns">
+                    <button type="button" className="btn btn-primary" onClick={this.prevPage} >Prev</button>
+
+
+                    <button type="button" className="btn btn-primary" onClick={this.nextPage}>Next</button>
+                </div>
             </>
+
         )
     }
 }
